@@ -1,0 +1,33 @@
+<!-- 
+<ion-header-bar align-title="left" class="bar-positive">
+<div class="buttons">
+<button class="button" ng-click="doSomething()"></button>
+</div>
+<h1 class="title">{{roomName}}</h1>
+<div class="buttons">
+<a class="button icon-right ion-close-round" href="#/app/map"></a>
+</div>
+</ion-header-bar>
+-->
+<ion-nav-bar class="bar-positive">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+     <div class="buttons">
+        <a class="button icon-right ion-close-round" ui-sref="app.home" ></a>
+    </div>
+</ion-nav-bar>
+<ion-view title="NavETA - Community">
+    <ion-tabs class="tabs-stable tabs-icon-top">
+        <ion-tab title="Recent" icon="ion-ios-stopwatch"  href="#/chat/chatRoomsRecent">
+            <ion-nav-view name="chatRoomRecents"></ion-nav-view>
+        </ion-tab>
+        <!--
+        <ion-tab title="Contacs" icon="ion-ios-people"  href="#/chat/chatContacts">
+            <ion-nav-view name="chatContacts"></ion-nav-view>
+        </ion-tab>
+        -->
+        <ion-tab title="Chats" icon="ion-chatbox-working" href="#/chat/chatConversations">
+            <ion-nav-view name="chatConversations"></ion-nav-view>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>

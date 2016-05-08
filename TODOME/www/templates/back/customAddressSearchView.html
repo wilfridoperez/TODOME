@@ -1,0 +1,33 @@
+<div class="ion-google-place-container">
+    <div class="bar bar-header item-input-inset bar-positive">
+        <label class="item-input-wrapper">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input class="google-place-search" type="search" ng-model="searchQuery" placeholder="Where to Go?" >
+        </label>
+        <button class="button button-clear">
+            Cancel
+        </button>
+    </div>
+    <ion-content class="has-header has-header">
+        <ion-list>
+            <ion-item class="item item-icon-left" ng-repeat="prediction in locations" type="item-text-wrap" ng-click="selectLocation(prediction.description)">
+                <i class="icon ion-ios-location-outline"></i>
+                {{prediction.description}}
+            </ion-item>
+            <ion-item class="item item-icon-left" ng-click="selectLocation(lastKnownPlaceText)">
+                <i class="icon ion-android-locate"></i>
+                <span style="font-weight:bold;">{{lastKnownPlaceText}}</span>
+                <div ng-if="lastKnownPlaceText" style="font-size:small;">Current Location</div>
+            </ion-item>
+            <ion-item class="item-divider">
+                Recent Searches
+            </ion-item>
+            <ion-item  class="item item-icon-left"  ng-repeat="savedSearch in SavedSearches" data-icon="false" 
+                      ng-click ="selectLocation('{{savedSearch.Search}}')">
+                <i class="icon ion-clock"></i>
+                <span >{{savedSearch.Search}}</span>
+            </ion-item>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</div>

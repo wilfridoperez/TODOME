@@ -1,0 +1,52 @@
+<ion-view view-title="Welcome to NavETA">
+    <ion-nav-buttons side="right" >
+        <a ng-show="!isOnboarding" class="button icon-right ion-close-round" href="#/app/map"></a>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="signIn-Message">
+            <p><strong>You are one step away</strong> of converting your daily and boring commuting routine into a <strong>full social experience!!</strong></p>      
+            <p>
+                We’re now working at bringing our <strong>vision of social commuting to reality</strong>, we invite you to be <strong>part of it</strong>.
+            </p>
+        </div>
+        <hr>
+        <div class="signIn-Social">
+            <div style="font-size: large;font-weight: 600;margin-bottom: 15px;">
+                Connect with:
+            </div>
+            <div class="navetaButton facebookColors  icon-left ion-social-facebook" ng-click="loginFacebook()">Facebook</div>
+            <div class="navetaButton twitterColors icon-left ion-social-twitter-outline" ng-click="loginTwitter()">Twitter</div>
+            <div class="navetaButton googlePlusColors icon-left ion-social-googleplus" ng-click="loginGooglePlus()">Google+</div>
+            </ion-list>
+        </div>
+
+    <hr class="hr-Or"/>
+    <div class="signIn-Login">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Username</span>
+                <input type="text" ng-model="loginData.username">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="password" ng-model="loginData.password">
+            </label>
+            <label class="item" style="padding-top: 1px;padding-bottom: 1px;">
+                <button class="button button-block button-positive" type="submit">Log in</button>
+            </label>
+        </div>
+
+    </div>
+
+    <div>
+        <center>  
+            <a class="button button-small  icon-left  button-positive">
+                Forgot your password?</a>
+        </center>
+    </div>
+    <div align="right">
+            <a ng-show="isOnboarding"  class="button button-small icon-left  button-clear button-dark" href="#/app/map">
+                Skip registration</a>
+    </div>
+    </ion-content>
+</ion-view>

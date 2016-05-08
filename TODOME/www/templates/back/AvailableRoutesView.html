@@ -1,0 +1,186 @@
+<div class="modal">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">Routes</h1>
+        <div class="button button-clear" ng-click="availableRoutesDialog.hide()"><span class="icon ion-close"></span></div>
+    </ion-header-bar>
+    <ion-content has-header="true" scroll="true">
+        <ion-list card ng-show="!availableRoutes">
+            <!-- TODO: design this page-->
+            <center>
+                <p>No route selected!!</p>
+                <p>Please close this window and select a destination.</p>
+            </center>
+        </ion-list>
+        <ion-list card  ng-show="availableRoutes">
+            <ion-item class="routeSummary">
+                <i class="icon ion-ios-circle-filled"></i><div>{{availableRoutes[0].legs[0].start_address}} </div>
+                <i class="icon ion-ios-location"></i><div>{{availableRoutes[0].legs[0].end_address}} </div>
+            </ion-item>
+            <ion-item class="item-No-Padding">
+                <!--angular begins-->
+                <div class="route-Options-Label" >
+                    <div ng-click="showMapOptions=!showMapOptions;" style="text-align: right; font-size: smaller;">
+                        <span ng-show="!showMapOptions">Show Route Options</span>
+                        <span ng-show="showMapOptions">Hide Route Options</span>
+                    </div>
+                    <div class="route-Options" ng-show="showMapOptions">
+                        <hr>
+                        <div >
+                            <div style="padding-left: 10px; font-size: larger;">Prefer Modes:</div>
+                            <ion-toggle ng-model="MapOptions_Bus" ng-checked="MapOptions_Bus">
+                                Bus
+                            </ion-toggle>
+
+                            <ion-toggle ng-model="MapOptions_Train" ng-checked="MapOptions_Train">
+                                Train
+                            </ion-toggle>
+                            <ion-toggle  ng-model="MapOptions_Subway" ng-checked="MapOptions_Subway">
+                                Subway
+                            </ion-toggle>
+                            <ion-toggle ng-model="MapOptions_Tram" ng-checked="MapOptions_Tram">
+                                Tram
+                            </ion-toggle>
+                        </div>
+                        <hr>
+                        <div>
+                            <div style="padding-left: 10px; font-size: larger;">Routes:</div>
+                            <ion-radio ng-model="RouteOptions" ng-value="BestRoute">Best route</ion-radio>
+                            <ion-radio ng-model="RouteOptions" ng-value="FewerTransfers">Fewer transfers</ion-radio>
+                            <ion-radio ng-model="RouteOptions" ng-value="LessWalking">Less walking</ion-radio>
+                        </div>
+                    </div>
+                </div>
+                <ion-list card ng-show="!showMapOptions" >
+                    <ion-item class="route-recomendation item-No-Padding" ng-repeat="route in availableRoutes">
+                        <div class="route-summary-main-" ng-repeat="leg in route.legs|orderBy: duration.value">
+                            <!--Route Summary: begins-->
+                            <div class="route-summary" ng-click="routeSelected($parent.$index);" accesskey="{{$parent.$index}}">
+                                <img src="img/SVG/Freepik/clock.svg" height="20" width="20">
+                                <div>
+                                    <text class="route-summary-dep-arr">{{leg.departure_time.value | date:'hh:mma'}} - {{leg.arrival_time.value | date:'hh:mma'}}</text>
+                                    <text class="route-summary-dur">{{leg.duration.text}}</text>
+                                </div>
+                            </div>
+                            <!--Route Summary: ends-->
+                            <!--Step: begins-->
+
+                            <div ng-click="routeSelected($parent.$index)" class="route-steps" accesskey="{{$parent.$index}}">
+                                <ion-scroll zooming="false" direction="x" >
+                                    <div class="route-steps-header" ng-repeat="step in leg.steps" style="display: inline-block; align-items:center">
+
+                                        <div ng-if="step.travel_mode == 'WALKING'" id="route_element_walk" class="route-walking" title="{{step.instructions}}">
+                                            <img ng-src="img/SVG/Freepik/walk.svg" height="20" width="20" />
+                                            <text>{{(step.duration.value / 60) | ceil}} min</text>
+                                        </div>
+                                        <div ng-if="step.travel_mode == 'TRANSIT'" class="route-transit" style="border-style: solid; border-width: 1px;border-bottom-style:inset; border-bottom-width:4px; border-bottom-color:{{step.transit.line.color}}">
+                                            <img ng-src="img/SVG/Freepik/{{getVehicleTypeImageName(step.transit.line.vehicle.type)}}" height="20" width="20" />
+                                            <text style="font-size:larger;font-weight:bolder">{{step.transit.line.short_name}}</text>
+                                        </div>
+                                        <div class="route-steps-separator" ng-if="!$last">&gt</div>
+                                    </div>
+                                </ion-scroll>
+                            </div>
+                            <!--Toggler-->
+                            <div ng-show="false" class="route-steps-details" ng-click="togglevariable('route', $parent.$index)">
+                                <div ng-show="!route{{$parent.$index}}">[Show Details]</div>
+                                <div ng-show="route{{$parent.$index}}">[Hide Details]</div>
+                            </div>
+
+                            <!--   Details Steps   -->
+                            <div class="route-details" ng-show="route{{$parent.$index}}">
+                                <div class="route-details-item-start">
+                                    <div class="route-details-time"><span>{{leg.departure_time.value | date:'hh:mma'}}</span></div>
+                                    <div class="route-transit-visual-start"></div>
+                                    <div class="route-transit-instruction" ng-bind-html="leg.start_address"></div>
+                                    <hr />
+                                </div>
+                                <div class="route-details-item" ng-repeat="step in leg.steps">
+                                    <div ng-init="routeDepartureTime=leg.departure_time.value" id="route-transit-{{$parent.$parent.$index}}{{$parent.$index}}{{$index}}" class="route-transit">
+                                        <div class="route-details-time">
+                                            <text ng-if="false" ng-init="routeDepartureTime = routeDepartureTime.getTime() + (step.duration.value *1000)">
+                                                {{routeDepartureTime | date:'hh:mma'}}
+                                            </text>
+                                        </div>
+                                        <img ng-if="step.travel_mode == 'WALKING'" class="route-transit-visual-TransitType"
+                                             ng-src="img/SVG/Freepik/walk.svg" height="20" width="20" />
+
+                                        <div ng-if="step.travel_mode == 'TRANSIT'" class="route-transit-visual-TransitType"
+                                             style="border-style: solid; border-width: 1px;border-bottom-style:inset; border-bottom-width:4px; border-bottom-color:{{step.transit.line.color}}">
+                                            <img ng-src="img/SVG/Freepik/{{getVehicleTypeImageName(step.transit.line.vehicle.type)}}" height="20" width="20" />
+                                            <text style="font-size:larger;font-weight:bolder">{{step.transit.line.short_name}}</text>
+                                        </div>
+
+                                        <div id="route-transit-visual-{{$parent.$parent.$index}}{{$parent.$index}}{{$index}}"
+                                             class="route-transit-visual-{{step.travel_mode}}">
+                                        </div>
+                                        <div class="route-transit-instruction">
+                                            <text ng-bind-html="step.instructions"></text>
+                                        </div>
+                                        <div class="route-transit-summary">
+                                            <!--Toggler  onclick="toggleResize(this, 'route-details-instructions');" -->
+                                            <img ng-click="route-details-instructions" class="route-transit-summaryToggleImg" id="route-transit-summaryToggleImg{{$parent.$parent.$index}}{{$parent.$index}}{{$index}}"
+                                                 ng-show="step.steps" ng-src="img/SVG/Freepik/arrow-down-bold.svg" style="width:10px;height:10px;"
+                                                 accesskey="{{$parent.$parent.$index}}{{$parent.$index}}{{$index}}" />
+                                            <img ng-show="!step.steps"
+                                                 style="width:10px;height:10px;" />
+
+                                            <text>About {{step.duration.text}}, </text>
+                                            <text ng-if="step.travel_mode == 'WALKING'"> {{step.distance.text}}</text>
+                                            <text ng-if="step.travel_mode == 'TRANSIT'"> {{step.transit.num_stops}} stops</text>
+                                        </div>
+                                        <ul id="route-details-instructions{{$parent.$parent.$index}}{{$parent.$index}}{{$index}}" class="route-details-instructions">
+                                            <li class="" ng-repeat="step_into in step.steps">
+                                                <text ng-bind-html="step_into.instructions" ng-if="step_into.instructions"></text> ({{step_into.distance.text}})
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="route-details-item-end">
+                                    <div class="route-details-time"><span>{{leg.arrival_time.value | date:'hh:mma'}}</span></div>
+                                    <div class="route-transit-visual-finish"></div>
+                                    <div class="route-transit-instruction" ng-bind-html="leg.end_address"></div>
+                                </div>
+                            </div>
+                            <!--Step: Ends-->
+
+                        </div>
+                    </ion-item>
+                    <!-- angular ends-->
+
+
+                </ion-list>
+            </ion-item>
+            <ion-item class="item-No-Padding">
+                <ion-slide-box style="height:74px !important;" show-pager="false" on-slide-changed="slideHasChanged($index)">
+                    <ion-slide ng-repeat="uberPriceEstimate in uberTripPriceEstimates">
+                        <div ng-click="OpenUberDeepLink(uberPriceEstimate.ProductId)" class="uber-recomendation" accesskey='{{uberPriceEstimate.Id}}'>
+                            <div class="uber-price-icon"><img ng-src= '{{uberPriceEstimate.Icon}}' style="width:auto;height:30px;"/></div>
+                            <div class="uber-price-displayName"><text>{{uberPriceEstimate.DisplayName}}</text></div>
+                            <div>
+                                <div class="uber-price-cost">
+                                    <text>
+                                        {{uberPriceEstimate.Estimate}} | {{uberPriceEstimate.Distance}} mi | {{(uberPriceEstimate.Duration /60) | floor}} min
+                                    </text>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ion-slide>
+                    <ion-slide ng-if="!uberTripPriceEstimates" >
+                        <div class="uber-price-icon"><img ng-src= 'img/Uber_Logo_Black_Background.png' style="width:auto;height:30px;"/></div>
+                        <div class="uber-price-displayName"><text>Contacting Uber Services...</text></div>
+                        <div>
+                            <div class="uber-price-cost">
+                                <ion-spinner icon="dots"></ion-spinner>
+                            </div>
+                        </div>
+                    </ion-slide>
+                </ion-slide-box>
+                <ul id="uber-EstimatePrice" ></ul>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</div>
+
+

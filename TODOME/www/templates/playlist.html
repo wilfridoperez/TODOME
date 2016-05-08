@@ -1,0 +1,17 @@
+<ion-view view-title="List: ">
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="OpenEditor()">
+            Add
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <h1>{{listName}}</h1>
+        <ion-list>
+            <ion-checkbox ng-repeat="item in items" ng-model="item.checked">
+                <div class="row"><div class="col col-75">{{item.title}}</div>
+                <div class="col" >{{item.Qty}} {{item.Unit}}</div>
+</div>
+            </ion-checkbox>
+        </ion-list>
+    </ion-content>
+</ion-view>
