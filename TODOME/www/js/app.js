@@ -3,8 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic'])
+var app = angular.module('todome', ['ionic','ngCordova', 
+    'firebase'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -51,7 +51,7 @@ var app = angular.module('starter', ['ionic'])
       }
     })
     .state('app.TODOLists', {
-      url: '/todolist',
+      url: '/todolists',
       views: {
         'menuContent': {
           templateUrl: 'templates/TODOLists.html',
@@ -70,6 +70,7 @@ var app = angular.module('starter', ['ionic'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/TODOLists');
+    
+  $urlRouterProvider.otherwise('/app/todolists');
     console.log('router load - end');
 });

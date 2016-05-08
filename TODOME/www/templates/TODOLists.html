@@ -7,7 +7,7 @@
     <ion-content >
         <ion-list>
             
-            <ion-item ng-repeat="list in Lists" href="#/app/playlists/{{playlist.id}}">
+            <ion-item ng-repeat="(name, list) in Lists" href="#/app/playlists/{{name}}">
                 {{list.title}}
             </ion-item>
         </ion-list>

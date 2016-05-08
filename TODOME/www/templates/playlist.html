@@ -1,17 +1,36 @@
-<ion-view view-title="List: ">
+<ion-view view-title="List: {{listName}}">
     <ion-nav-buttons side="right">
         <button class="button" ng-click="OpenEditor()">
             Add
         </button>
     </ion-nav-buttons>
     <ion-content>
-        <h1>{{listName}}</h1>
         <ion-list>
-            <ion-checkbox ng-repeat="item in items" ng-model="item.checked">
-                <div class="row"><div class="col col-75">{{item.title}}</div>
-                <div class="col" >{{item.Qty}} {{item.Unit}}</div>
+
+            <ion-item ng-repeat="(name, item) in items" ng-click="selectValue(value)" class="item-avatar item-icon-left">
+                <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" ng-click="OpenEditor(name)">
+
+                    <div class="col col-75">
+                        <li class="icon" >
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="item.checked">
+                            </label>
+                        </li>
+                        {{item.title}}
+                    </div>
+                    <div class="col" >{{item.Qty}} {{item.Unit}}</div>
+                </div>
+            </ion-item>
+
+            <!--
+<ion-checkbox ng-repeat="item in items" ng-model="item.checked" >
+<div class="row">
+<div class="col col-75">{{item.title}}</div>
+<div class="col" >{{item.Qty}} {{item.Unit}}</div>
+<button ng-click="myClick()" stop-event="click">Click Me</button>
 </div>
-            </ion-checkbox>
+</ion-checkbox>
+-->
         </ion-list>
     </ion-content>
 </ion-view>

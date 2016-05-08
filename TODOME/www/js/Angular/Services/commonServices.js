@@ -1,6 +1,6 @@
 app.factory('commonServices',  function( 
                                                 $rootScope, 
-                                                $cordovaNetwork, 
+                                               // $cordovaNetwork, 
                                                 $ionicLoading)
                   {
     var reservedWords =   ["Current Location", "Home", "Work"];
@@ -32,7 +32,7 @@ app.factory('commonServices',  function(
 
 
     return {
-        getFirebaseNavETABasedUrl: function(env)
+        getFirebaseBasedUrl: function(env)
         {
             switch(env)
             {
@@ -189,7 +189,7 @@ app.factory('commonServices',  function(
             return returnValue;
         },
 
-        isOnline: function(){
+       /* isOnline: function(){
 
             if(ionic.Platform.isWebView()){
                 return $cordovaNetwork.isOnline();    
@@ -207,7 +207,7 @@ app.factory('commonServices',  function(
                 return !navigator.onLine;
             }
 
-        }
+        }*/
 
     }
 });
