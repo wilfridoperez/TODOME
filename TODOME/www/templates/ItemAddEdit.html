@@ -1,51 +1,73 @@
 <ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Item</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeEditor()">Close</button>
-    </div>
-  </ion-header-bar>
- 
-   <ion-content>
-   
-    <form ng-submit="SaveItem()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Produt Name</span>
-          <input type="text" ng-model="item.title">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Notes</span>
-          <input type="text" ng-model="item.notes">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Retailer</span>
-          <input type="text" ng-model="item.retailer">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Location in Store</span>
-          <input type="text" ng-model="item.locationInStore">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Qty</span>
-          <input type="number" ng-model="item.qty">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Unit</span>
-          <input type="text" ng-model="item.unit">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Unit Price</span>
-          <input type="number" ng-model="item.unitPrice">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Total</span>
-          <text>{{calculateTotal()}}</text>
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Save</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
+    <ion-header-bar>
+
+        <div class="buttons">
+            <button class="button button-clear"  ng-click="closeEditor()">Close</button>
+        </div>     
+        <h1 class="title">Item</h1>
+        <div class="buttons">
+            <button class="button button-clear"  ng-click="SaveItem()">Save</button>
+        </div>
+    </ion-header-bar>
+
+    <ion-content>
+
+        <form ng-submit="">
+            <div class="list">
+                <div class="item item-divider">
+                    General
+                </div>
+                <div>
+                    <label class="item item-input">
+                        <span class="input-label">Produt Name</span>
+                        <input type="text" ng-model="item.title">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Category</span>
+                        <input type="text" ng-model="item.category">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Qty</span>
+                        <input type="number" ng-model="item.qty">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Unit</span>
+                        <input type="text" ng-model="item.unit">
+                    </label>
+                </div>
+                <div class="item item-divider">
+                    Retailer Info
+                </div>
+                <div>
+                    <label class="item item-input">
+                        <span class="input-label">Retailer</span>
+                        <input type="text" ng-model="item.retailer">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Location in Store</span>
+                        <input type="text" ng-model="item.locationInStore">
+                    </label>
+                </div>
+                <div class="item item-divider">
+                    Cost
+                </div>
+                <div>
+                    <label class="item item-input">
+                        <span class="input-label">Unit Price</span>
+                        <input type="number" ng-model="item.unitPrice">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Total</span>
+                        <text>{{calculateTotal()}}</text>
+                    </label>
+                </div>
+                <div class="item item-divider">
+                    Notes
+                </div>
+                <textarea rows="2" cols="50" ng-model="item.notes">
+                </textarea>
+
+            </div>
+        </form>
+    </ion-content>
 </ion-modal-view>

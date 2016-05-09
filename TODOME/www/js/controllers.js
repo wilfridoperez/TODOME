@@ -174,4 +174,15 @@ app.controller('TODOListCtrl', function($scope,
         filterProperties: 'title'
       });
     };
+    
+    $scope.showCancelButton = function ()
+    {
+        return ($scope.data.showReorder || $scope.data.showDelete);
+    };
+    
+    $scope.editList = function()
+    {
+        $scope.data.showDelete = !$scope.data.showDelete; 
+        $scope.data.showReorder = !$scope.data.showReorder;
+    };
 });
