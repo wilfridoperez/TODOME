@@ -7,16 +7,24 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 app.controller('TODOListsCtrl', function( $scope, 
                                            $ionicModal, 
                                            $timeout, 
-                                           DataLayerTODOList
+                                           DataLayerTODOList,
+                                           $ionicFilterBar
                                           ) 
                {
-    $scope.Lists = DataLayerTODOList.getTODOLists();/*[
-        { title: 'Wallmart - Saturday', id: 1 },
-        { title: 'Homedepot', id: 2 },
-        { title: 'Car', id: 3 },
-        { title: 'TODO - Sunday', id: 4 },
-    ];*/
+    $scope.Lists = DataLayerTODOList.getTODOLists();
+
     $scope.list = {};
+
+    $scope.GetNumberOfItems = function(item)
+    {
+        var returnValue = 0;
+
+        if (item.items)
+        {
+            returnValue = Object.keys(item.items).length;
+        }
+        return returnValue;
+    };
     console.log('Controller - TODOListsCtrl - loaded');
     // 
     $ionicModal.fromTemplateUrl('templates/TODOListAddEdit.html', {
@@ -47,27 +55,27 @@ app.controller('TODOListsCtrl', function( $scope,
     };
 })
 
-app.controller('TODOListCtrl', function($scope, $stateParams, $ionicModal, $timeout, DataLayerTODOList) {
+app.controller('TODOListCtrl', function($scope, 
+                                         $stateParams, 
+                                         $ionicModal, 
+                                         $timeout, 
+                                         DataLayerTODOList,
+                                        $ionicFilterBar) {
 
     console.log('Controller - TODOListCtrl - loaded');
+
     // 
-    $scope.items = DataLayerTODOList.getTODOListItems($stateParams.playlistId);/*[
-        { title: 'Chicken', id: 1 , 'checked' : false, 'Unit': 'Whole', 'Qty': 1},
-        { title: 'Onion',   id: 2 , 'checked' : true,  'Unit': 'Lb', 'Qty': 1},
-        { title: 'Apple',   id: 3 , 'checked' : false, 'Unit': 'Unit', 'Qty': 6},
-        { title: 'Beef',    id: 4 , 'checked' : false, 'Unit': 'Lb', 'Qty':  2}
-    ];*/
+    $scope.items = DataLayerTODOList.getTODOListItems($stateParams.playlistId);
     $scope.items.$loaded()
         .then(function(data) {
         console.log('loaded'); // true
-        $scope.items.$bindTo($scope, 'items');
+        // $scope.items.$bindTo($scope, 'items');
     })
         .catch(function(error) {
         console.error("Error:", error);
     });
 
     $scope.TodoList = DataLayerTODOList.getTODOList($stateParams.playlistId);
-
     $scope.TodoList.$loaded()
         .then(function(data)
               {
@@ -76,9 +84,19 @@ app.controller('TODOListCtrl', function($scope, $stateParams, $ionicModal, $time
     })
         .catch(function(error)
                {
-    console.error("Error:", error)});
+        console.error("Error:", error)});
 
     $scope.item = {};
+
+    $scope.isListEmpty = function()
+    {
+        return true;
+    };
+
+    $scope.data = {
+        showDelete: false,
+        showReorder: false
+    };
 
     // 
     $ionicModal.fromTemplateUrl('templates/ItemAddEdit.html', {
@@ -93,33 +111,32 @@ app.controller('TODOListCtrl', function($scope, $stateParams, $ionicModal, $time
     };
 
     // 
-    $scope.OpenEditor = function(itemId) {
-        if(!itemId)
+    $scope.OpenEditor = function(item) {
+        if(!item)
         {
-            $scope.item = {};
+            $scope.item = {$priority: $scope.items.length};
         }
         else
         {
-           //TODO: Find object
-           
+            $scope.item = item;
+
         }
         $scope.modal.show();
     };
     // 
     $scope.SaveItem = function() {
         console.log('Saving Data', $scope.item);
-
-        DataLayerTODOList.saveTodoListItem({title: $scope.item.Title, 
-                                            Qty:   $scope.item.Qty,
-                                            unit:  $scope.item.Unit,
-                                            checked : false});
-        /*
-        $scope.items.push( {title: $scope.item.Title, 
-                            Qty:   $scope.item.Qty,
-                            unit:  $scope.item.Unit,
-                            checked : false});*/
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
+        if($scope.item.$id)
+        {
+            $scope.items.$save($scope.item);
+        }
+        else{
+            DataLayerTODOList.saveTodoListItem({title: $scope.item.title, 
+                                                qty:   $scope.item.qty,
+                                                unit:  $scope.item.unit,
+                                                checked : false,
+                                                $priority: $scope.item.$priority});
+        }
         $timeout(function() {
             $scope.closeEditor();
         }, 200);
@@ -127,6 +144,34 @@ app.controller('TODOListCtrl', function($scope, $stateParams, $ionicModal, $time
 
     $scope.calculateTotal = function()
     {
-        return $scope.item.Qty * $scope.item.UnitPrice;
+        return $scope.item.qty * $scope.item.unitPrice;
     }
+
+    $scope.moveItem = function(item, fromIndex, toIndex) {
+
+        $scope.items[fromIndex].$priority = toIndex;
+        $scope.items[toIndex].$priority = fromIndex;
+        $scope.items.$save($scope.items[fromIndex]);
+        $scope.items.$save($scope.items[toIndex]);
+    };
+
+    $scope.onItemDelete = function(item) {
+        //$scope.items.splice($scope.items.indexOf(item), 1);
+        $scope.items.$remove(item);
+    };
+
+    $scope.updateChecked = function(item)
+    {
+        $scope.items.$save(item);
+    };
+    
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        items: $scope.items,
+        update: function (filteredItems) {
+          $scope.items = filteredItems;
+        },
+        filterProperties: 'title'
+      });
+    };
 });

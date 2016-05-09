@@ -4019,12 +4019,13 @@ a.subdued {
     color: inherit; }
   .bar .button, .bar button {
     z-index: 1;
-    padding: 0 8px;
+    /* padding: 0 8px; */
     min-width: initial;
     min-height: 31px;
     font-weight: 400;
     font-size: 13px;
-    line-height: 32px; }
+    line-height: 32px;
+    }
     .bar .button.button-icon:before,
     .bar .button .icon:before, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before, .bar button.button-icon:before,
     .bar button .icon:before, .bar button.icon:before, .bar button.icon-left:before, .bar button.icon-right:before {
@@ -8580,11 +8581,12 @@ progress {
     background-color: #e5e5e5; }
   .button:after {
     position: absolute;
-    top: -6px;
-    right: -6px;
-    bottom: -6px;
-    left: -6px;
-    content: ' '; }
+    /* top: -6px; */
+    /* right: -6px; */
+    /* bottom: -6px; */
+    /* left: -6px; */
+    /* content: ' '; */
+    }
   .button .icon {
     vertical-align: top;
     pointer-events: none; }
