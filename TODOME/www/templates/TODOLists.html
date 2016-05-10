@@ -16,7 +16,7 @@
                 <div ng-click="TODOList = !TODOList">
                     <i class="icon ion-ios-list-outline " 
                     ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}"
-                    ng-click="go('/app/playlists/{{list.$id}}');"  ></i>
+                    ng-click="go('/app/TODOListTasks/{{list.$id}}');"  ></i>
                     <div class="TODOList-text" >{{list.title}}</div>
                     <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
                 </div>

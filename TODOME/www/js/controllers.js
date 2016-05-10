@@ -65,11 +65,16 @@ app.controller('TODOListCtrl', function($scope,
                                          $ionicModal, 
                                          $timeout, 
                                          DataLayerTODOList,
-                                         $ionicFilterBar) {
+                                         $ionicFilterBar,
+                                         DataLayerLists) {
 
     console.log('Controller - TODOListCtrl - loaded');
 
     $scope.item = {};
+    $scope.lists = {};
+    $scope.Categories = {};
+    $scope.Units = {};
+    $scope.inputPlaceHolder = "Add your new task";
     $scope.listName = '';
     $scope.data = 
         {
@@ -78,7 +83,10 @@ app.controller('TODOListCtrl', function($scope,
     };
 
     // 
-    $scope.items = DataLayerTODOList.getTODOListItems($stateParams.playlistId);
+    $scope.items = DataLayerTODOList.getTODOListItems($stateParams.todoListId);
+
+    $scope.Categories = DataLayerLists.getList("Categories");
+    $scope.Units = DataLayerLists.getList("Units");
 
     $scope.items.$loaded()
         .then(function(data) {
@@ -89,7 +97,7 @@ app.controller('TODOListCtrl', function($scope,
         console.error("Error:", error);
     });
 
-    $scope.TodoList = DataLayerTODOList.getTODOList($stateParams.playlistId);
+    $scope.TodoList = DataLayerTODOList.getTODOList($stateParams.todoListId);
     $scope.TodoList.$loaded()
         .then(function(data){
         console.log(data);
@@ -145,9 +153,86 @@ app.controller('TODOListCtrl', function($scope,
         }, 200);
     };
 
+    function getValueRegExp (regExp, str, pre_fix_count)
+    {
+        var valueExtracted  = execRegExp(regExp, str);
+        if (valueExtracted)
+        {
+              return valueExtracted.toString().trim().substring(pre_fix_count);
+        }
+    }
+    
+    $scope.addListItem = function(title)
+    {   //\su\d*\s|\su\d*|u\d*
+        //-> priority  -> p#
+        var priority  = getValueRegExp(/\sp\d\s|\sp\d/g, title, 1);
+        //-> units     -> u#
+        var units     = getValueRegExp(/\su\d+\s|\su\d+/g, title, 1);
+        //-> quantity  -> q#
+        var quantity  = getValueRegExp(/\sq\d+\s|\sq\d+/g, title, 1);
+        //-> unitPrice -> up#
+        var unitPrice = getValueRegExp(/\sup\d+\s|\sup\d+/g, title, 2);
+        //-> category  -> c#
+        var category  = getValueRegExp(/\sc\d+\s|\sc\d+/g, title, 1);
+        
+        //Clean title
+        title = title.replace(/\sp\d\s|\sp\d/g, " ");
+        title = title.replace(/\su\d+\s|\su\d+/g, " ");
+        title = title.replace(/\sq\d+\s|\sq\d+/g, " ");
+        title = title.replace(/\sup\d+\s|\sup\d+/g, " ");
+        title = title.replace(/\sc\d+\s|\sc\d+/g, " ");
+        title = title.trim();
+        //priority -> high / medium / low / unimportant
+        if(priority)
+        {
+            priority = parseInt(priority);
+            if (priority <0 && priority >3)
+            {
+                priority = null;
+            }
+        }
+        
+        if(quantity)
+        {
+            quantity = parseInt(quantity);
+            if (quantity < 0 )
+            {
+                quantity = null;
+            }
+        }
+        
+        if(units)
+        {
+            units = parseInt(units);
+            if (units < 0 && units >= $scope.Units.lenght)
+            {
+                units = null;
+            }
+        }
+        if(unitPrice)
+        {
+            unitPrice = parseInt(unitPrice);
+            if (unitPrice < 0)
+            {
+                unitPrice = null;
+            }
+        }
+        
+        DataLayerTODOList.saveTodoListItem({title: title, 
+                                            qty:   quantity,
+                                            unit:  $scope.Units[parseInt(units)].Title,
+                                            unitprice: unitPrice,
+                                            checked : false,
+                                            category: category,
+                                            priority: priority
+                                            //$priority: $scope.item.$priority
+                                           });
+        this.smartInputTitle = '';
+    };
+
     $scope.calculateTotal = function()
     {
-        return $scope.item.qty * $scope.item.unitPrice;
+        return $scope.item.qty * $scope.item.unitprice;
     }
 
     $scope.moveItem = function(item, fromIndex, toIndex) {
@@ -195,9 +280,23 @@ app.controller('TODOListCtrl', function($scope,
 
     $scope.isListEmpty = function()
     {
-        //$scope.items
-
         console.log('isListEmpty: ' + this.items.length + ' ' + (this.items.length == 0));
         return (this.items.length == 0);
     };
+
+    function execRegExp(re, str)
+    {
+
+        //var re = /\su\d\s/g; 
+        //var str = 'kaka u1 ';
+        var m;
+
+        while ((m = re.exec(str)) !== null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            return m;
+        }
+    };
+
 });

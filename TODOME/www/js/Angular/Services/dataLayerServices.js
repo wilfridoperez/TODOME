@@ -82,6 +82,9 @@ app.factory('DataLayerTODOList',  function(commonServices, $firebase, $firebaseA
                     'checked' :commonServices.objectToValidJsonString(data.checked),
                     'qty' :commonServices.objectToValidJsonString(data.qty),
                     'unit' :commonServices.objectToValidJsonString(data.unit),
+                    'category' :commonServices.objectToValidJsonString(data.category),
+                    'priority' :commonServices.objectToValidJsonString(data.priority),
+                    'unitprice' :commonServices.objectToValidJsonString(data.unitprice),
                     '$priority' :commonServices.objectToValidJsonString(data.$priority)
                 }
             ).then(function(ref) {
@@ -95,5 +98,23 @@ app.factory('DataLayerTODOList',  function(commonServices, $firebase, $firebaseA
         }
         
        
+    }
+});
+
+
+app.factory('DataLayerLists',  function(commonServices, $firebase, $firebaseArray, 
+                   $firebaseObject)
+                  {
+   // Firebase.enableLogging(true);
+    var lists = [];
+    return {
+        getList: function(listName)
+        {
+             var list = $firebaseArray(
+                 new Firebase(commonServices.getFirebaseBasedUrl() + 
+                     'Lists/' +
+                     listName).orderByChild('Title'));
+            return list;
+        }
     }
 });

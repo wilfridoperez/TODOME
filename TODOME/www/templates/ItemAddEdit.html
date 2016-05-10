@@ -6,7 +6,7 @@
         </div>     
         <h1 class="title">Item</h1>
         <div class="buttons">
-            <button class="button button-positive"  ng-click="SaveItem()">Save</button>
+            <button class="button button-positive"  ng-click="SaveItem()" ng-disabled="!item.title || item.title == ''">Save</button>
         </div>
     </ion-header-bar>
 
@@ -24,7 +24,12 @@
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Category</span>
-                        <input type="text" ng-model="item.category">
+                        <select ng-model="item.category">  
+                         <option ng-repeat="category in Categories">
+                         {{category.Title}}
+                         </option>
+                        
+                        </select>
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Qty</span>
@@ -32,7 +37,10 @@
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Unit</span>
-                        <input type="text" ng-model="item.unit">
+                        
+                        <select ng-model="item.unit" ng-init="item.unit=Units[0]" 
+                        ng-options="unit.Title for unit in Units">
+                        </select>
                     </label>
                 </div>
                 <div class="item item-divider">
@@ -54,7 +62,7 @@
                 <div>
                     <label class="item item-input">
                         <span class="input-label">Unit Price</span>
-                        <input type="number" ng-model="item.unitPrice">
+                        <input type="number" ng-model="item.unitprice">
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Total</span>

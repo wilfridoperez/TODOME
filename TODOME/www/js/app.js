@@ -61,10 +61,10 @@ var app = angular.module('todome', ['ionic','ngCordova',
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/TODOListTasks/:todoListId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
+        templateUrl: 'templates/TODOListTasks.html',
         controller: 'TODOListCtrl'
       }
     }
