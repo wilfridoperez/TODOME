@@ -8,7 +8,8 @@ app.controller('TODOListsCtrl', function( $scope,
                                            $ionicModal, 
                                            $timeout, 
                                            DataLayerTODOList,
-                                           $ionicFilterBar
+                                           $ionicFilterBar,
+                                           $location
                                           ) 
                {
     $scope.Lists = DataLayerTODOList.getTODOLists();
@@ -53,6 +54,10 @@ app.controller('TODOListsCtrl', function( $scope,
             $scope.closeEditor();
         }, 200);
     };
+
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
 })
 
 app.controller('TODOListCtrl', function($scope, 
@@ -60,12 +65,21 @@ app.controller('TODOListCtrl', function($scope,
                                          $ionicModal, 
                                          $timeout, 
                                          DataLayerTODOList,
-                                        $ionicFilterBar) {
+                                         $ionicFilterBar) {
 
     console.log('Controller - TODOListCtrl - loaded');
 
+    $scope.item = {};
+    $scope.listName = '';
+    $scope.data = 
+        {
+        showDelete: false,
+        showReorder: false
+    };
+
     // 
     $scope.items = DataLayerTODOList.getTODOListItems($stateParams.playlistId);
+
     $scope.items.$loaded()
         .then(function(data) {
         console.log('loaded'); // true
@@ -77,26 +91,15 @@ app.controller('TODOListCtrl', function($scope,
 
     $scope.TodoList = DataLayerTODOList.getTODOList($stateParams.playlistId);
     $scope.TodoList.$loaded()
-        .then(function(data)
-              {
+        .then(function(data){
         console.log(data);
-        $scope.listName = data.title;
+        $scope.listName = data.find(x=> x.$id === 'title').$value;
     })
-        .catch(function(error)
-               {
-        console.error("Error:", error)});
+        .catch(function(error){
+        console.error("Error:", error)}
+              );
 
-    $scope.item = {};
 
-    $scope.isListEmpty = function()
-    {
-        return true;
-    };
-
-    $scope.data = {
-        showDelete: false,
-        showReorder: false
-    };
 
     // 
     $ionicModal.fromTemplateUrl('templates/ItemAddEdit.html', {
@@ -164,25 +167,37 @@ app.controller('TODOListCtrl', function($scope,
     {
         $scope.items.$save(item);
     };
-    
+
     $scope.showFilterBar = function () {
-      filterBarInstance = $ionicFilterBar.show({
-        items: $scope.items,
-        update: function (filteredItems) {
-          $scope.items = filteredItems;
-        },
-        filterProperties: 'title'
-      });
+        filterBarInstance = $ionicFilterBar.show({
+            items: $scope.items,
+            update: function (filteredItems) {
+                $scope.items = filteredItems;
+            },
+            filterProperties: 'title'
+        });
     };
-    
+
     $scope.showCancelButton = function ()
     {
         return ($scope.data.showReorder || $scope.data.showDelete);
     };
-    
+
     $scope.editList = function()
     {
         $scope.data.showDelete = !$scope.data.showDelete; 
         $scope.data.showReorder = !$scope.data.showReorder;
+    };
+
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
+
+    $scope.isListEmpty = function()
+    {
+        //$scope.items
+
+        console.log('isListEmpty: ' + this.items.length + ' ' + (this.items.length == 0));
+        return (this.items.length == 0);
     };
 });

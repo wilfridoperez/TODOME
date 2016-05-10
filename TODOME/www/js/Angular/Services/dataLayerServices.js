@@ -46,7 +46,7 @@ app.factory('DataLayerTODOList',  function(commonServices, $firebase, $firebaseA
              todoListRef = new Firebase(commonServices.getFirebaseBasedUrl() + 'TODOLists' + '/' + todoListId +'/');// "naveta.firebaseIO.com/events");
              todoListFire = $firebaseArray(todoListRef);
             
-            todoList = $firebaseObject(todoListRef/*todoListsRef.child(todoListId).child('items')*/);
+            todoList = todoListFire;//$firebaseObject(todoListRef/*todoListsRef.child(todoListId).child('items')*/);
             return todoListFire;
         },
         

@@ -1,17 +1,46 @@
-<ion-view view-title="Lists">
-    <ion-nav-buttons side="right">
-        <button class="button" ng-click="OpenEditor()">
-            Add
+<ion-view view-title="TODO Lists">
+    <ion-nav-buttons side="right" class="bar-energized">
+       
+       <button class="button button-icon icon ion-ios-plus-outline" 
+                ng-click="OpenEditor()">
         </button>
+       
+       
     </ion-nav-buttons>
     <ion-content >
         <ion-list>
-            
-            <ion-item class= "item item-icon-left" ng-repeat=" list in Lists" href="#/app/playlists/{{list.$id}}">
-                <i class="icon ion-ios-list-outline"></i>
-                {{list.title}}
-                <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
+            <div class="item item-divider">
+                Today
+            </div>
+            <ion-item class= "item item-icon-left TODOList-row" ng-repeat="list in Lists" >
+                <div ng-click="TODOList = !TODOList">
+                    <i class="icon ion-ios-list-outline " 
+                    ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}"
+                    ng-click="go('/app/playlists/{{list.$id}}');"  ></i>
+                    <div class="TODOList-text" >{{list.title}}</div>
+                    <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
+                </div>
+                <div ng-show="TODOList">
+                    <div><img  ng-src="img/SVG/star.svg" class="IconTODOList-Actions"/> </div>
+                    <div><img  ng-src="img/SVG/notification.svg" class="IconTODOList-Actions"/></div>
+                    <div><img  ng-src="img/SVG/group-of-students.svg" class="IconTODOList-Actions"/></div>
+                </div>
             </ion-item>
+            <div class="item item-divider">
+                Tomorrow
+            </div>
+            <div class="item item-divider">
+                Next Week
+            </div>
+            <div class="item item-divider">
+                This Month
+            </div>
+            <div class="item item-divider">
+                Next Month
+            </div>
+            <div class="item item-divider">
+                Future
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>

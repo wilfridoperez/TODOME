@@ -1965,7 +1965,8 @@
   content: ""; }
 
 .ion-ios-list-outline:before {
-  content: ""; }
+   content: ""; 
+  }
 
 .ion-ios-location:before {
   content: ""; }
@@ -2880,7 +2881,8 @@
   content: ""; }
 
 .ion-star:before {
-  content: ""; }
+   content: ""; 
+  }
 
 .ion-stats-bars:before {
   content: ""; }
@@ -3006,7 +3008,8 @@ time, mark, audio, video {
   border: 0;
   vertical-align: baseline;
   font: inherit;
-  font-size: 100%; }
+  font-size: 100%;
+  }
 
 ol, ul {
   list-style: none; }
@@ -3341,7 +3344,8 @@ body,
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
-  -ms-content-zooming: none; }
+  -ms-content-zooming: none;
+  }
 
 body.grade-b,
 body.grade-c {
@@ -3704,7 +3708,8 @@ address {
   line-height: 1.42857; }
 
 a {
-  color: #387ef5; }
+  color: #387ef5;
+  }
 
 a.subdued {
   padding-right: 10px;
@@ -6139,12 +6144,16 @@ a.item-content {
   position: absolute;
   top: 0;
   height: 100%;
-  font-size: 32px; }
+  font-size: 32px;
+  }
   .item-icon-left .icon:before,
   .item-icon-right .icon:before {
     display: block;
     width: 32px;
-    text-align: center; }
+    text-align: center;
+    position: relative;
+    top: -5px;
+    }
 
 .item .fill-icon {
   min-width: 30px;

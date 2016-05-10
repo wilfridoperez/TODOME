@@ -1,4 +1,4 @@
-<ion-view view-title="List: {{listName}}" style="left: 0px; right: 0px;margin-left: 0px;margin-right: 0px;">
+<ion-view view-title="Tasks" style="left: 0px !important; right: 0px !important;margin-left: 0px;margin-right: 0px;">
     <ion-nav-buttons side="right" >
         <button ng-show="showCancelButton()" 
               class="button button-icon icon ion-ios-close-outline" 
@@ -23,7 +23,12 @@
         </button>
     </ion-nav-buttons>
     <ion-content>
+       
+       
         <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+            <div class="item item-divider">
+                {{listName}}
+            </div>
             <ion-item ng-repeat="item in items"  class="item-avatar item-icon-left">
                 <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" >
                     <div class="col">
@@ -48,8 +53,8 @@
                 </div>
             </ion-item>
         </ion-list>
-        <div ng-show="!items">
-            <span>List is empty - Addd an item to your list using the "+" button.</span>
+        <div ng-show="isListEmpty()" class="TODOListItemEmptyList">
+            <div >List is empty - Addd an item to your list using the "+" button.</div>
         </div>
     </ion-content>
 </ion-view>

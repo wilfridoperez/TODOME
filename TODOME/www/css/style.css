@@ -1,1 +1,61 @@
 /* Empty. Add your own CSS if you like */
+.IconTODOList-Actions
+{
+    width: 20px;
+    float: left;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.TODOList-row a
+{
+    /* padding:16px 49px 16px 16px !important; */
+    text-decoration: none !important;
+}
+
+.TODOList-row 
+{
+    /*padding-bottom: 6px;*/
+    /* background-color: aliceblue; */
+}
+
+.TODOList-text
+{
+    position: relative;
+
+    font-weight: bold;
+    font-size: large;
+
+}
+
+.TODOList-icon
+{
+}
+
+.TODOList-icon-true
+{   color:red;
+    top:-5px;
+}
+.TODOList-icon-false
+{
+    color:blue;
+    top:-10px;
+}
+
+.TODOListItemEmptyList
+{
+    font-weight: 100;
+    height: 200px;
+    /* vertical-align: middle; */
+    display: inline-flex;
+    width: 100%;
+}
+
+.TODOListItemEmptyList div {
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    margin: auto auto;
+    width: 100%;
+    font-size: large;
+}
