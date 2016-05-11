@@ -1,13 +1,10 @@
-<ion-view view-title="Tasks" style="left: 0px !important; right: 0px !important;margin-left: 0px;margin-right: 0px;">
+<ion-view view-title="{{listName}}" style="left: 0px !important; right: 0px !important;margin-left: 0px;margin-right: 0px;">
     <ion-nav-buttons side="right" >
         <button ng-show="showCancelButton()" 
                 class="button button-icon icon ion-ios-close-outline" 
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="data.showDelete = false; data.showReorder = false">
         </button>
-
-
-
         <button class="button button-icon icon ion-android-search" 
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="showFilterBar()"
@@ -18,7 +15,7 @@
         dadd
     </ion-header-bar>
     <div class="bar bar-subheader">
-        <h2 class="title"> {{listName}}</h2>
+        
         <div>
             <form ng-submit="addListItem(smartInputTitle)" name="addTaskForm">
                 <div class="item item-input-inset" style= "padding-bottom: 0px; padding-top: 0px;">
@@ -33,11 +30,7 @@
         </div>
     </div>
     <ion-content class="has-subheader">
-
-
         <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
-
-
             <ion-item ng-repeat="item in items"  class="item-avatar item-icon-left">
                 <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" >
                     <div class="col">
@@ -61,7 +54,6 @@
                     <div class="col col-25" >{{item.qty}} {{item.unit}}</div>
                 </div>
             </ion-item>
-
         </ion-list>
         <div ng-show="isListEmpty()" class="TODOListItemEmptyList">
             <div ><text>There is no tasks in this TODO list. Add an item to your list using the </text>
@@ -75,7 +67,11 @@
                 ng-click="OpenEditor()"
                 ng-show="!showCancelButton()" >
         </button>
-        <h1 class="title">Updated today</h1>
+        <div class="title">
+            <div>{{activeTasks()}} /
+                {{totalTasks()}}</div>
+        </div>
+
         <button class="button button-icon icon ion-compose" 
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="editList();"

@@ -37,6 +37,7 @@ app.controller('TODOListCtrl', function($scope,
     });
 
     $scope.TodoList = DataLayerTODOList.getTODOList($stateParams.todoListId);
+
     $scope.TodoList.$loaded()
         .then(function(data){
         console.log(data);
@@ -45,8 +46,6 @@ app.controller('TODOListCtrl', function($scope,
         .catch(function(error){
         console.error("Error:", error)}
               );
-
-
 
     // 
     $ionicModal.fromTemplateUrl('templates/ItemAddEdit.html', {
@@ -92,15 +91,6 @@ app.controller('TODOListCtrl', function($scope,
         }, 200);
     };
 
-    function getValueRegExp (regExp, str, pre_fix_count)
-    {
-        var valueExtracted  = execRegExp(regExp, str);
-        if (valueExtracted)
-        {
-              return valueExtracted.toString().trim().substring(pre_fix_count);
-        }
-    }
-    
     $scope.addListItem = function(title)
     {   //\su\d*\s|\su\d*|u\d*
         //-> priority  -> p#
@@ -113,7 +103,7 @@ app.controller('TODOListCtrl', function($scope,
         var unitPrice = getValueRegExp(/\sup\d+\s|\sup\d+/g, title, 2);
         //-> category  -> c#
         var category  = getValueRegExp(/\sc\d+\s|\sc\d+/g, title, 1);
-        
+
         //Clean title
         title = title.replace(/\sp\d\s|\sp\d/g, " ");
         title = title.replace(/\su\d+\s|\su\d+/g, " ");
@@ -130,7 +120,7 @@ app.controller('TODOListCtrl', function($scope,
                 priority = null;
             }
         }
-        
+
         if(quantity)
         {
             quantity = parseInt(quantity);
@@ -139,8 +129,8 @@ app.controller('TODOListCtrl', function($scope,
                 quantity = null;
             }
         }
-        
-        
+
+
         if(unitPrice)
         {
             unitPrice = parseInt(unitPrice);
@@ -149,7 +139,7 @@ app.controller('TODOListCtrl', function($scope,
                 unitPrice = null;
             }
         }
-        
+
         if(units)
         {
             units = parseInt(units);
@@ -159,10 +149,10 @@ app.controller('TODOListCtrl', function($scope,
             }
             else
             {
-               units =  $scope.Units[parseInt(units)].Title;
+                units =  $scope.Units[parseInt(units)].Title;
             }
         }
-        
+
         DataLayerTODOList.saveTodoListItem({title: title, 
                                             qty:   quantity,
                                             unit: units,
@@ -226,9 +216,62 @@ app.controller('TODOListCtrl', function($scope,
 
     $scope.isListEmpty = function()
     {
-        console.log('isListEmpty: ' + this.items.length + ' ' + (this.items.length == 0));
-        return (this.items.length == 0);
+        //console.log('isListEmpty: ' + this.items.length + ' ' + (this.items.length == 0));
+        if ($scope && $scope.items)
+            return ($scope.items.length == 0);
+        else 
+            return true;
     };
+
+    $scope.completedTasks = function()
+    {
+        if ($scope && $scope.items && $scope.items.length > 0)
+        {
+            var itemsCount = $scope.items.length;
+            var itemsCompletedCount = 0;
+            for (i = 0; i < itemsCount; i++)
+            {
+                if ($scope.items[i].checked)
+                {
+                    itemsCompletedCount++;
+                }
+            }
+            return itemsCompletedCount;
+        }
+        else
+            return 0;
+    }
+
+    $scope.totalTasks = function()
+    {
+        if ($scope && $scope.items && $scope.items.length > 0)
+        {
+            var itemsCount = $scope.items.length;
+            return itemsCount;
+        }
+        else
+            return 0;
+    }
+    
+
+    $scope.activeTasks = function()
+    {
+        if ($scope && $scope.items && $scope.items.length > 0)
+        {
+            var itemsCount = $scope.items.length;
+            var itemsActivedCount = 0;
+            for (i = 0; i < itemsCount; i++)
+            {
+                if (!$scope.items[i].checked)
+                {
+                    itemsActivedCount++;
+                }
+            }
+            return itemsActivedCount;
+        }
+        else
+            return 0;
+    }
 
     function execRegExp(re, str)
     {
@@ -241,5 +284,14 @@ app.controller('TODOListCtrl', function($scope,
             return m;
         }
     };
+
+    function getValueRegExp (regExp, str, pre_fix_count)
+    {
+        var valueExtracted  = execRegExp(regExp, str);
+        if (valueExtracted)
+        {
+            return valueExtracted.toString().trim().substring(pre_fix_count);
+        }
+    }
 
 });
