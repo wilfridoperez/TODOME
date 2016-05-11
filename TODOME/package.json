@@ -1,7 +1,7 @@
 {
-  "name": "todome",
-  "version": "1.1.1",
-  "description": "TODOME: An Ionic project",
+  "name": "TODOME",
+  "version": "0.0.1",
+  "description": "TODOME: Tracking list, made easy!!",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
