@@ -1,11 +1,8 @@
 <ion-view view-title="TODO Lists">
     <ion-nav-buttons side="right" class="bar-energized">
-       
-       <button class="button button-icon icon ion-ios-plus-outline" 
+        <button class="button button-icon icon ion-ios-plus-outline" 
                 ng-click="OpenEditor()">
         </button>
-       
-       
     </ion-nav-buttons>
     <ion-content >
         <ion-list>
@@ -15,8 +12,8 @@
             <ion-item class= "item item-icon-left TODOList-row" ng-repeat="list in Lists" >
                 <div ng-click="TODOList = !TODOList">
                     <i class="icon ion-ios-list-outline " 
-                    ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}"
-                    ng-click="go('/app/TODOListTasks/{{list.$id}}');"  ></i>
+                       ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}"
+                       ng-click="go('/app/TODOListTasks/{{list.$id}}');"  ></i>
                     <div class="TODOList-text" >{{list.title}}</div>
                     <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
                 </div>
@@ -43,4 +40,13 @@
             </div>
         </ion-list>
     </ion-content>
+    <ion-footer-bar  class="bar-positive">
+        <div class="buttons">
+            <button class="button">Left Button</button>
+        </div>
+        <h1 class="title">Today, 15 tasks</h1>
+        <div class="buttons" ng-click="doSomething()">
+            <button class="button">Right Button</button>
+        </div>
+    </ion-footer-bar>
 </ion-view>

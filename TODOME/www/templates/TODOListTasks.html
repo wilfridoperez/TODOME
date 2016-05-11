@@ -5,72 +5,81 @@
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="data.showDelete = false; data.showReorder = false">
         </button>
-        <button class="button button-icon icon ion-ios-plus-outline" 
-                style="padding-left: 0px;padding-right: 0px;"
-                ng-click="OpenEditor()"
-                ng-show="!showCancelButton()" >
-        </button>
 
-        <button class="button button-icon icon ion-compose" 
-                style="padding-left: 0px;padding-right: 0px;"
-                ng-click="editList();"
-                ng-show="!showCancelButton()" >
-        </button>
+
+
         <button class="button button-icon icon ion-android-search" 
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="showFilterBar()"
                 ng-show="!showCancelButton()">
         </button>
     </ion-nav-buttons>
-    <ion-content >
-        <div class="item item-divider">
-            {{listName}}
-        </div>
-        <div class="list">
-            <form ng-submit="addListItem(smartInputTitle)" name="customQuoteForm">
-                <div class="item item-input-inset">
+    <ion-header-bar   class="bar-positive">
+        dadd
+    </ion-header-bar>
+    <div class="bar bar-subheader">
+        <h2 class="title"> {{listName}}</h2>
+        <div>
+            <form ng-submit="addListItem(smartInputTitle)" name="addTaskForm">
+                <div class="item item-input-inset" style= "padding-bottom: 0px; padding-top: 0px;">
                     <label class="item-input-wrapper">
                         <input type="text" placeholder="{{inputPlaceHolder}}" ng-model="smartInputTitle" required> 
                     </label>
-                    <button class="button button-small" ng-disabled="customQuoteForm.$invalid">
+                    <button class="button button-small" ng-disabled="addTaskForm.$invalid">
                         Add
                     </button>
                 </div>
             </form>
         </div>
+    </div>
+    <ion-content class="has-subheader">
+
 
         <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
 
-            
-                <ion-item ng-repeat="item in items"  class="item-avatar item-icon-left">
-                    <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" >
-                        <div class="col">
-                            <ion-reorder-button class="ion-navicon" 
-                                                on-reorder="moveItem(item, $fromIndex, $toIndex)">
-                            </ion-reorder-button>
-                            <ion-delete-button class="ion-minus-circled" 
-                                               ng-click="onItemDelete(item)">
-                            </ion-delete-button>
-                        </div>
-                        <div class="col" ng-show="!data.showDelete && !data.showReorder">
-                            <li class="icon" >
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="item.checked" ng-click="updateChecked(item)">
-                                </label>
-                            </li>
-                        </div>
-                        <div class="col col-75" ng-click="OpenEditor(item)">
-                            {{item.title}}
-                        </div>
-                        <div class="col col-25" >{{item.qty}} {{item.unit}}</div>
+
+            <ion-item ng-repeat="item in items"  class="item-avatar item-icon-left">
+                <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" >
+                    <div class="col">
+                        <ion-reorder-button class="ion-navicon" 
+                                            on-reorder="moveItem(item, $fromIndex, $toIndex)">
+                        </ion-reorder-button>
+                        <ion-delete-button class="ion-minus-circled" 
+                                           ng-click="onItemDelete(item)">
+                        </ion-delete-button>
                     </div>
-                </ion-item>
-         
+                    <div class="col" ng-show="!data.showDelete && !data.showReorder">
+                        <li class="icon" >
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="item.checked" ng-click="updateChecked(item)">
+                            </label>
+                        </li>
+                    </div>
+                    <div class="col col-75" ng-click="OpenEditor(item)">
+                        {{item.title}}
+                    </div>
+                    <div class="col col-25" >{{item.qty}} {{item.unit}}</div>
+                </div>
+            </ion-item>
+
         </ion-list>
         <div ng-show="isListEmpty()" class="TODOListItemEmptyList">
             <div ><text>There is no tasks in this TODO list. Add an item to your list using the </text>
-            <i class=" ion-ios-plus-outline"></i> 
-            <text>button.</text></div>
+                <i class=" ion-ios-plus-outline"></i> 
+                <text>button.</text></div>
         </div>
     </ion-content>
+    <ion-footer-bar  class="bar-positive">
+        <button class="button button-icon icon ion-ios-plus-outline" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="OpenEditor()"
+                ng-show="!showCancelButton()" >
+        </button>
+        <h1 class="title">Updated today</h1>
+        <button class="button button-icon icon ion-compose" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="editList();"
+                ng-show="!showCancelButton()" >
+        </button>
+    </ion-footer-bar>
 </ion-view>
