@@ -1,27 +1,64 @@
 <ion-view view-title="TODO Lists">
     <ion-nav-buttons side="right" class="bar-energized">
-        <button class="button button-icon icon ion-ios-plus-outline" 
-                ng-click="OpenEditor()">
+        <button ng-show="showCancelButton()" 
+                class="button button-icon icon ion-ios-close-outline" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="data.showDelete = false; data.showReorder = false">
+        </button>
+        <button class="button button-icon icon ion-android-search" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="showFilterBar()"
+                ng-show="!showCancelButton()">
         </button>
     </ion-nav-buttons>
-    <ion-content >
-        <ion-list>
+    <div class="bar bar-subheader">
+        <div>
+            <form ng-submit="addList(smartInputTitle)" name="addTaskForm">
+                <div class="item item-input-inset" style= "padding-bottom: 0px; padding-top: 0px;">
+                    <label class="item-input-wrapper">
+                        <input class="TODOSearchInput" style = "width: 100%;" type="text" placeholder="{{inputPlaceHolder}}" ng-model="smartInputTitle" required> 
+                    </label>
+                    <button class="button button-small" ng-disabled="addTaskForm.$invalid">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <ion-content  class="has-subheader">
+        <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
             <div class="item item-divider">
                 Today
             </div>
             <ion-item class= "item item-icon-left TODOList-row" ng-repeat="list in Lists" >
-                <div ng-click="TODOList = !TODOList">
+                <div class="col">
+                    <ion-reorder-button class="ion-navicon" 
+                                        on-reorder="moveList(list, $fromIndex, $toIndex)">
+                    </ion-reorder-button>
+                    <ion-delete-button class="ion-minus-circled" 
+                                       ng-click="onListDelete(list)">
+                    </ion-delete-button>
+                </div>
+                <div >
                     <i class="icon ion-ios-list-outline " 
-                       ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}"
-                       ng-click="go('/app/TODOListTasks/{{list.$id}}');"  ></i>
-                    <div class="TODOList-text" >{{list.title}}</div>
-                    <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
+                       ng-click="TODOList = !TODOList"
+                       ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}">
+                    </i>
+                    <div ng-click="go('/app/TODOListTasks/{{list.$id}}');"  >
+                        <div class="TODOList-text" >{{list.title}}</div>
+                        <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
+                    </div>
                 </div>
                 <div ng-show="TODOList">
-                    <div><img  ng-src="img/SVG/star.svg" class="IconTODOList-Actions"/> </div>
-                    <div><img  ng-src="img/SVG/notification.svg" class="IconTODOList-Actions"/></div>
-                    <div><img  ng-src="img/SVG/group-of-students.svg" class="IconTODOList-Actions"/></div>
-                    <div><img  ng-src="img/SVG/time-planning.svg" class="IconTODOList-Actions"/></div>
+                    <div>
+                        <img ng-click="OpenEditor(list);" ng-src="img/svg/pencil.svg" class="IconTODOList-Actions"/> 
+                    </div>
+                    <div style="height: 20px;float: right;">
+                        <img ng-click="toast('Star Rating - Comming Soon!!');" ng-src="img/svg/star.svg" class="IconTODOList-Actions"/>
+                        <img ng-click="toast('Reminder - Comming Soon!!');" ng-src="img/svg/notification.svg" class="IconTODOList-Actions"/>
+                        <img ng-click="toast('Share with others - Comming Soon!!');" ng-src="img/svg/group-of-students.svg" class="IconTODOList-Actions"/>
+                        <img ng-click="toast('Scheduling Feature - Comming Soon!!');" ng-src="img/svg/time-planning.svg" class="IconTODOList-Actions"/>
+                    </div>
                 </div>
             </ion-item>
             <div class="item item-divider">
@@ -39,12 +76,18 @@
         </ion-list>
     </ion-content>
     <ion-footer-bar  class="bar-positive">
-        <!-- div class="buttons">
-            <button class="button">Left Button</button>
-        </div -->
-        <h1 class="title">Today, 15 tasks</h1>
-        <!-- div class="buttons" ng-click="doSomething()">
-            <button class="button">Right Button</button>
-        </div -->
+        <button class="button button-icon icon ion-compose" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="editList();"
+                ng-show="!showCancelButton()" >
+        </button>
+        <div class="title">
+            <div>15 tasks today</div>
+        </div>
+        <button class="button button-icon icon ion-ios-plus-outline" 
+                style="padding-left: 0px;padding-right: 0px;"
+                ng-click="OpenEditor()"
+                ng-show="!showCancelButton()" >
+        </button>
     </ion-footer-bar>
 </ion-view>

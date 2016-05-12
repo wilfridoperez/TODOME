@@ -3,20 +3,34 @@ app.controller('TODOListsCtrl', function( $scope,
                                            $timeout, 
                                            DataLayerTODOList,
                                            $ionicFilterBar,
-                                           $location
+                                           $location,
+                                           $ionicScrollDelegate,
+                                           commonServices
                                           ) 
                {
     $scope.Lists = DataLayerTODOList.getTODOLists();
+    $scope.inputPlaceHolder = "What is your new challenge?";
+    $scope.List = {};
+    $scope.data = 
+        {
+        showDelete: false,
+        showReorder: false
+    };
 
-    $scope.list = {};
-
-    $scope.GetNumberOfItems = function(item)
+    $scope.toast = function (caption)
     {
+        commonServices.toast(caption);
+    };
+    
+    $scope.GetNumberOfItems = function(List)
+    {
+        var activeTasks = 0;
+        var closedTasks = 0;
         var returnValue = 0;
 
-        if (item.items)
+        if (List.items)
         {
-            returnValue = Object.keys(item.items).length;
+            returnValue = Object.keys(List.items).length;
         }
         return returnValue;
     };
@@ -34,22 +48,93 @@ app.controller('TODOListsCtrl', function( $scope,
     };
 
     // 
-    $scope.OpenEditor = function() {
+   // $scope.OpenEditor = function() {
+    //    $scope.modal.show();
+    //};
+    
+    $scope.OpenEditor = function(item) {
+        if(!item)
+        {
+            $scope.List = {$priority: $scope.Lists.length};
+        }
+        else
+        {
+            $scope.List = item;
+
+        }
         $scope.modal.show();
     };
+   
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
+    
+    /**************/
     // 
-    $scope.SaveItem = function() {
-        console.log('Saving Data', $scope.item);
-        DataLayerTODOList.saveTodoList({title: $scope.list.Title});
-        //$scope.Lists.push( {title: $scope.list.Title});
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
+    $scope.SaveList = function() {
+        console.log('Saving Data', $scope.List);
+        if($scope.List.$id)
+        {
+            $scope.Lists.$save($scope.List);
+        }
+        else{
+            DataLayerTODOList.saveTodoList({    title: $scope.List.title, 
+                                                description:   $scope.List.description,
+                                                retailer:  $scope.List.retailer,
+                                                $priority: $scope.List.$priority});
+        }
         $timeout(function() {
             $scope.closeEditor();
         }, 200);
     };
 
-    $scope.go = function ( path ) {
-        $location.path( path );
+    $scope.addList = function(title)
+    {   
+        DataLayerTODOList.saveTodoList({title: title, 
+                                            description:   '',
+                                            retailer: ''
+                                            //$priority: $scope.List.$priority
+                                           });
+        this.smartInputTitle = '';
+        $ionicScrollDelegate.scrollBottom(true);
+    };
+
+
+    $scope.moveList = function(List, fromIndex, toIndex) {
+
+        $scope.Lists[fromIndex].$priority = toIndex;
+        $scope.Lists[toIndex].$priority = fromIndex;
+        $scope.Lists.$save($scope.Lists[fromIndex]);
+        $scope.Lists.$save($scope.Lists[toIndex]);
+    };
+
+    $scope.onListDelete = function(List) {
+        $scope.Lists.$remove(List);
+    };
+
+    $scope.updateChecked = function(List)
+    {
+        $scope.Lists.$save(List);
+    };
+
+    $scope.showFilterBar = function () {
+        filterBarInstance = $ionicFilterBar.show({
+            items: $scope.Lists,
+            update: function (filteredLists) {
+                $scope.Lists = filteredLists;
+            },
+            filterProperties: 'title'
+        });
+    };
+
+    $scope.showCancelButton = function ()
+    {
+        return ($scope.data.showReorder || $scope.data.showDelete);
+    };
+
+    $scope.editList = function()
+    {
+        $scope.data.showDelete = !$scope.data.showDelete; 
+        $scope.data.showReorder = !$scope.data.showReorder;
     };
 })

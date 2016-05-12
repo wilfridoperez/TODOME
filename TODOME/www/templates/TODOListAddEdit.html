@@ -6,19 +6,19 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="SaveItem()">
+    <form ng-submit="SaveList()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">List Name</span>
-          <input type="text" ng-model="list.Title">
+          <input type="text" ng-model="List.title">
         </label>
          <label class="item item-input">
           <span class="input-label">Description</span>
-          <input type="text" ng-model="list.Description">
+          <input type="text" ng-model="List.description">
         </label>
          <label class="item item-input">
           <span class="input-label">Retailer</span>
-          <input type="text" ng-model="list.Retailer">
+          <input type="text" ng-model="List.retailer">
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Save</button>

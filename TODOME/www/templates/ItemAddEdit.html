@@ -24,11 +24,9 @@
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Category</span>
-                        <select ng-model="item.category">  
-                         <option ng-repeat="category in Categories">
-                         {{category.Title}}
-                         </option>
-                        
+                        <select ng-model="item.category" ng-init="item.category=Categories[0]"> 
+                           <option ng-repeat="category in Categories" 
+                           value="{{category.Title}}">{{category.Title}}</option> 
                         </select>
                     </label>
                     <label class="item item-input">
@@ -38,8 +36,9 @@
                     <label class="item item-input">
                         <span class="input-label">Unit</span>
                         
-                        <select ng-model="item.unit" ng-init="item.unit=Units[0]" 
-                        ng-options="unit.Title for unit in Units">
+                        <select ng-model="item.unit" ng-init="item.unit=Units[0]"> 
+                           <option ng-repeat="unit in Units" 
+                           value="{{unit.Title}}">{{unit.Title}}</option> 
                         </select>
                     </label>
                 </div>

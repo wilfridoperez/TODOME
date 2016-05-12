@@ -8,7 +8,7 @@ app.controller('TODOListCtrl', function($scope,
                                          $ionicScrollDelegate) {
 
     console.log('Controller - TODOListCtrl - loaded');
-
+ 
     $scope.item = {};
     $scope.lists = {};
     $scope.Categories = {};
@@ -29,8 +29,7 @@ app.controller('TODOListCtrl', function($scope,
 
     $scope.items.$loaded()
         .then(function(data) {
-        console.log('loaded'); // true
-        // $scope.items.$bindTo($scope, 'items');
+        console.log('loaded'); 
     })
         .catch(function(error) {
         console.error("Error:", error);
@@ -41,12 +40,17 @@ app.controller('TODOListCtrl', function($scope,
     $scope.TodoList.$loaded()
         .then(function(data){
         console.log(data);
-        $scope.listName = data.find(x=> x.$id === 'title').$value;
+        $scope.listName = data.find(findElement).$value;
     })
         .catch(function(error){
         console.error("Error:", error)}
               );
 
+    function findElement(obj)
+    {
+        return obj.$id === 'title';
+    }
+    
     // 
     $ionicModal.fromTemplateUrl('templates/ItemAddEdit.html', {
         scope: $scope
@@ -72,6 +76,7 @@ app.controller('TODOListCtrl', function($scope,
         }
         $scope.modal.show();
     };
+    
     // 
     $scope.SaveItem = function() {
         console.log('Saving Data', $scope.item);
@@ -83,8 +88,12 @@ app.controller('TODOListCtrl', function($scope,
             DataLayerTODOList.saveTodoListItem({title: $scope.item.title, 
                                                 qty:   $scope.item.qty,
                                                 unit:  $scope.item.unit,
+                                                locationInStore: $scope.item.locationInStore,
                                                 checked : false,
-                                                $priority: $scope.item.$priority});
+                                                retailer: $scope.item.retailer,
+                                                notes: $scope.item.notes,
+                                                category: $scope.item.category,
+                                                $priority: $scope.item.length});
         }
         $timeout(function() {
             $scope.closeEditor();
@@ -159,8 +168,8 @@ app.controller('TODOListCtrl', function($scope,
                                             unitprice: unitPrice,
                                             checked : false,
                                             category: category,
-                                            priority: priority
-                                            //$priority: $scope.item.$priority
+                                            priority: priority,
+                                            $priority: $scope.item.length
                                            });
         this.smartInputTitle = '';
         $ionicScrollDelegate.scrollBottom(true);
@@ -180,7 +189,6 @@ app.controller('TODOListCtrl', function($scope,
     };
 
     $scope.onItemDelete = function(item) {
-        //$scope.items.splice($scope.items.indexOf(item), 1);
         $scope.items.$remove(item);
     };
 
