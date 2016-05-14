@@ -5,7 +5,7 @@
     float: left;
     margin-right: 15px;
     margin-top: 10px;
-    height: 20;
+    height: 20px;
 }
 
 .TODOList-row a
@@ -26,7 +26,7 @@
     font-weight: bold;
     font-size: large;
     position: relative;
-    top: -5px;
+    top: -px;
 }
 
 .TODOList-icon
@@ -65,3 +65,82 @@
 {
     font-size: medium !important;
 }
+
+.TODOListItem-Separator-Completed
+{
+    /*
+    border-radius: 10px;
+    border-width: 0px 0px 0px 0px;
+    margin: 5px;
+    width: 50%;
+    background-color: darkgray;
+    */
+}
+
+.TODOListItem-Separator-Active
+{
+    /* 
+    border-radius: 10px;
+    border-width: 0px 0px 0px 0px;
+    margin: 5px;
+    width: 50%;
+    background-color: darkgray;
+    */
+}
+
+.item
+{
+
+    border-width: 0px 0px 0px 0px !important;
+}
+
+.checkbox-P1 input:before,
+.checkbox-P1 .checkbox-icon:before {
+    border-color: red;
+    background: #F3867A;
+}
+
+.checkbox-P1 input:checked:before,
+.checkbox-P1 input:checked + .checkbox-icon:before {
+    background: red;
+    border-color: red;
+}
+
+.checkbox-P2 input:before,
+.checkbox-P2 .checkbox-icon:before 
+{
+    border-color: orange;
+    background: #F3CBA3;
+}
+
+.checkbox-P2 input:checked:before,
+.checkbox-P2 input:checked + .checkbox-icon:before {
+    background: orange;
+    border-color: orange;
+}
+
+.checkbox-P3 input:before,
+.checkbox-P3 .checkbox-icon:before {
+    border-color: blue;
+    background: #B9F3F7;
+}
+
+.checkbox-P3 input:checked:before,
+.checkbox-P3 input:checked + .checkbox-icon:before {
+    background: blue;
+    border-color: blue;
+}
+
+.checkbox-P4 input:before,
+.checkbox-P4 .checkbox-icon:before {
+    border-color: black;
+    background: #DCDCDC;
+}
+
+.checkbox-P4 input:checked:before,
+.checkbox-P4 input:checked + .checkbox-icon:before {
+    background: black;
+    border-color: black;
+}
+
+

@@ -1965,8 +1965,7 @@
   content: ""; }
 
 .ion-ios-list-outline:before {
-   content: ""; 
-  }
+  content: ""; }
 
 .ion-ios-location:before {
   content: ""; }
@@ -2881,8 +2880,7 @@
   content: ""; }
 
 .ion-star:before {
-   content: ""; 
-  }
+  content: ""; }
 
 .ion-stats-bars:before {
   content: ""; }
@@ -3008,8 +3006,7 @@ time, mark, audio, video {
   border: 0;
   vertical-align: baseline;
   font: inherit;
-  font-size: 100%;
-  }
+  font-size: 100%; }
 
 ol, ul {
   list-style: none; }
@@ -3344,8 +3341,7 @@ body,
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
-  -ms-content-zooming: none;
-  }
+  -ms-content-zooming: none; }
 
 body.grade-b,
 body.grade-c {
@@ -3708,8 +3704,7 @@ address {
   line-height: 1.42857; }
 
 a {
-  color: #387ef5;
-  }
+  color: #387ef5; }
 
 a.subdued {
   padding-right: 10px;
@@ -4024,13 +4019,12 @@ a.subdued {
     color: inherit; }
   .bar .button, .bar button {
     z-index: 1;
-    /* padding: 0 8px; */
+    padding: 0 8px;
     min-width: initial;
     min-height: 31px;
     font-weight: 400;
     font-size: 13px;
-    line-height: 32px;
-    }
+    line-height: 32px; }
     .bar .button.button-icon:before,
     .bar .button .icon:before, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before, .bar button.button-icon:before,
     .bar button .icon:before, .bar button.icon:before, .bar button.icon-left:before, .bar button.icon-right:before {
@@ -6144,16 +6138,12 @@ a.item-content {
   position: absolute;
   top: 0;
   height: 100%;
-  font-size: 32px;
-  }
+  font-size: 32px; }
   .item-icon-left .icon:before,
   .item-icon-right .icon:before {
     display: block;
     width: 32px;
-    text-align: center;
-    position: relative;
-    top: -5px;
-    }
+    text-align: center; }
 
 .item .fill-icon {
   min-width: 30px;
@@ -8590,12 +8580,11 @@ progress {
     background-color: #e5e5e5; }
   .button:after {
     position: absolute;
-    /* top: -6px; */
-    /* right: -6px; */
-    /* bottom: -6px; */
-    /* left: -6px; */
-    /* content: ' '; */
-    }
+    top: -6px;
+    right: -6px;
+    bottom: -6px;
+    left: -6px;
+    content: ' '; }
   .button .icon {
     vertical-align: top;
     pointer-events: none; }

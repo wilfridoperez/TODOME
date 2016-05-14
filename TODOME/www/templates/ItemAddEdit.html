@@ -19,8 +19,15 @@
                 </div>
                 <div>
                     <label class="item item-input">
-                        <span class="input-label">Produt Name</span>
+                        <span class="input-label">Task/Item</span>
                         <input type="text" ng-model="item.title">
+                    </label>
+                     <label class="item item-input">
+                        <span class="input-label">Priority</span>
+                        <select ng-model="item.priority" ng-init="item.priority=Priorities[0]"> 
+                           <option ng-repeat="priority in Priorities" 
+                           value="{{priority.Title}}">{{priority.Title}}</option> 
+                        </select>
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Category</span>

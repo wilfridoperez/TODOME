@@ -42,22 +42,24 @@
                 <div >
                     <i class="icon ion-ios-list-outline " 
                        ng-click="TODOList = !TODOList"
-                       ng-style="TODOList && {'top':'-10px'} || {'top': '5px'}">
+                       ng-style="TODOList && {'top':'-13px'} || {'top': '5px'}">
                     </i>
                     <div ng-click="go('/app/TODOListTasks/{{list.$id}}');"  >
+                       <!-- i class=" ion-ios-flag"></i -->
                         <div class="TODOList-text" >{{list.title}}</div>
                         <span class="badge badge-positive">{{GetNumberOfItems(list)}}</span>
                     </div>
                 </div>
                 <div ng-show="TODOList">
-                    <div>
-                        <img ng-click="OpenEditor(list);" ng-src="img/svg/pencil.svg" class="IconTODOList-Actions"/> 
-                    </div>
-                    <div style="height: 20px;float: right;">
+                    
+                    <div style="height: 20px;float: left;">
                         <img ng-click="toast('Star Rating - Comming Soon!!');" ng-src="img/svg/star.svg" class="IconTODOList-Actions"/>
                         <img ng-click="toast('Reminder - Comming Soon!!');" ng-src="img/svg/notification.svg" class="IconTODOList-Actions"/>
                         <img ng-click="toast('Share with others - Comming Soon!!');" ng-src="img/svg/group-of-students.svg" class="IconTODOList-Actions"/>
                         <img ng-click="toast('Scheduling Feature - Comming Soon!!');" ng-src="img/svg/time-planning.svg" class="IconTODOList-Actions"/>
+                    </div>
+                    <div style="height: 20px;float: right;">
+                        <img ng-click="OpenEditor(list);" ng-src="img/svg/pencil.svg" class="IconTODOList-Actions"/> 
                     </div>
                 </div>
             </ion-item>

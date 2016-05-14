@@ -8,7 +8,7 @@ app.controller('TODOListCtrl', function($scope,
                                          $ionicScrollDelegate) {
 
     console.log('Controller - TODOListCtrl - loaded');
- 
+
     $scope.item = {};
     $scope.lists = {};
     $scope.Categories = {};
@@ -26,6 +26,7 @@ app.controller('TODOListCtrl', function($scope,
 
     $scope.Categories = DataLayerLists.getList("Categories");
     $scope.Units = DataLayerLists.getList("Units");
+    $scope.Priorities = DataLayerLists.getList("Priorities");
 
     $scope.items.$loaded()
         .then(function(data) {
@@ -50,7 +51,7 @@ app.controller('TODOListCtrl', function($scope,
     {
         return obj.$id === 'title';
     }
-    
+
     // 
     $ionicModal.fromTemplateUrl('templates/ItemAddEdit.html', {
         scope: $scope
@@ -76,7 +77,7 @@ app.controller('TODOListCtrl', function($scope,
         }
         $scope.modal.show();
     };
-    
+
     // 
     $scope.SaveItem = function() {
         console.log('Saving Data', $scope.item);
@@ -260,7 +261,7 @@ app.controller('TODOListCtrl', function($scope,
         else
             return 0;
     }
-    
+
 
     $scope.activeTasks = function()
     {
@@ -279,6 +280,50 @@ app.controller('TODOListCtrl', function($scope,
         }
         else
             return 0;
+    }
+
+    $scope.estimatedCost = function()
+    {
+        if ($scope && $scope.items && $scope.items.length > 0)
+        { 
+            var itemsCount = $scope.items.length;
+            var cost = 0;
+            for (i = 0; i < itemsCount; i++)
+            {
+                if ($scope.items[i].qty && $scope.items[i].unitprice )
+                {
+                    
+                    cost = cost + (parseInt($scope.items[i].qty) * parseInt($scope.items[i].unitprice));
+                }
+            }
+            return cost;
+        }
+        else
+            return 0;
+    }
+    
+    $scope.getPriorityCSS = function (item)
+    {
+        switch (item.priority)
+        {
+
+            case 'Priority 1':
+                {
+                    return'checkbox-P1';
+                }
+            case 'Priority 2':
+                {
+                    return 'checkbox-P2';
+                }
+            case 'Priority 3':
+                {
+                    return 'checkbox-P3';
+                }
+            default:
+                {
+                    return 'checkbox-P4';
+                }
+        }
     }
 
     function execRegExp(re, str)

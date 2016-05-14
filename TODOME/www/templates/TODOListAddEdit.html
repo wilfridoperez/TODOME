@@ -1,29 +1,51 @@
 <ion-modal-view>
-  <ion-header-bar class="bar-positive">
-    <h1 class="title">Item</h1>
-    <div class="buttons">
-      <button class="button button-positive" ng-click="closeEditor()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="SaveList()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">List Name</span>
-          <input type="text" ng-model="List.title">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Description</span>
-          <input type="text" ng-model="List.description">
-        </label>
-         <label class="item item-input">
-          <span class="input-label">Retailer</span>
-          <input type="text" ng-model="List.retailer">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Save</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">Item</h1>
+        <div class="buttons">
+            <button class="button button-positive" ng-click="closeEditor()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="SaveList()">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">List Name:</span>
+                    <input type="text" ng-model="List.title">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Description:</span>
+                    <input type="text" ng-model="List.description">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Retailer:</span>
+                    <input type="text" ng-model="List.retailer">
+                </label>
+                <div class="item item-divider">
+                    Due Date
+                </div>
+                <label class="item item-input">
+                    <span class="input-label">Date:</span>
+                    <input type="date" ng-model="List.dueDate">
+                </label>
+                 <label class="item item-input">
+                    <span class="input-label">time:</span>
+                    <input type="time" name="List.dueTime">
+                </label>
+                <div class="item item-divider">
+                    Reminder
+                </div>
+                <label class="item item-input">
+                    <span class="input-label">Date:</span>
+                    <input type="date" ng-model="List.reminderDate">
+                </label>
+                 <label class="item item-input">
+                    <span class="input-label">time:</span>
+                    <input type="time" name="List.reminderTime">
+                </label>
+                <label class="item">
+                    <button class="button button-block button-positive" type="submit">Save</button>
+                </label>
+            </div>
+        </form>
+    </ion-content>
 </ion-modal-view>
