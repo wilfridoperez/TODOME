@@ -283,7 +283,7 @@ app.controller('TODOListCtrl', function($scope,
     }
 
     $scope.estimatedCost = function()
-    {
+    { 
         if ($scope && $scope.items && $scope.items.length > 0)
         { 
             var itemsCount = $scope.items.length;
