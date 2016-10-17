@@ -21,7 +21,7 @@ app.controller('TODOListCtrl', function($scope,
         showReorder: false
     };
 
-    // 
+    //  
     $scope.items = DataLayerTODOList.getTODOListItems($stateParams.todoListId);
 
     $scope.Categories = DataLayerLists.getList("Categories");
@@ -41,7 +41,9 @@ app.controller('TODOListCtrl', function($scope,
     $scope.TodoList.$loaded()
         .then(function(data){
         console.log(data);
-        $scope.listName = data.find(findElement).$value;
+        //TODO: [10] may breake the code if the schema changes. thsi has to be fixed.
+        $scope.listName = data[10].$value; 
+        //var x  = data.find(findElement).$value;
     })
         .catch(function(error){
         console.error("Error:", error)}
@@ -68,7 +70,7 @@ app.controller('TODOListCtrl', function($scope,
     $scope.OpenEditor = function(item) {
         if(!item)
         {
-            $scope.item = {$priority: $scope.items.length};
+            //x $scope.item = {$priority: $scope.items.length};
         }
         else
         {
@@ -93,8 +95,9 @@ app.controller('TODOListCtrl', function($scope,
                                                 checked : false,
                                                 retailer: $scope.item.retailer,
                                                 notes: $scope.item.notes,
-                                                category: $scope.item.category,
-                                                $priority: $scope.item.length});
+                                                category: $scope.item.category//,
+                                                //$priority: $scope.item.length
+                                               });
         }
         $timeout(function() {
             $scope.closeEditor();
@@ -169,11 +172,11 @@ app.controller('TODOListCtrl', function($scope,
                                             unitprice: unitPrice,
                                             checked : false,
                                             category: category,
-                                            priority: priority,
-                                            $priority: $scope.item.length
+                                            priority: priority//,
+                                            //$priority: 0/*$scope.item.length*/
                                            });
         this.smartInputTitle = '';
-        $ionicScrollDelegate.scrollBottom(true);
+        $ionicScrollDelegate.scrollTop(true);
     };
 
     $scope.calculateTotal = function()
@@ -190,7 +193,14 @@ app.controller('TODOListCtrl', function($scope,
     };
 
     $scope.onItemDelete = function(item) {
-        $scope.items.$remove(item);
+        console.log("onItemDelete" + item);
+        $scope.items.$remove(item).then(function(ref) {
+            if($scope.items.length == 0)
+            {
+                $scope.data.showDelete = false; $scope.data.showReorder = false
+            }
+        });
+
     };
 
     $scope.updateChecked = function(item)
@@ -292,7 +302,7 @@ app.controller('TODOListCtrl', function($scope,
             {
                 if ($scope.items[i].qty && $scope.items[i].unitprice )
                 {
-                    
+
                     cost = cost + (parseInt($scope.items[i].qty) * parseInt($scope.items[i].unitprice));
                 }
             }
@@ -301,7 +311,7 @@ app.controller('TODOListCtrl', function($scope,
         else
             return 0;
     }
-    
+
     $scope.getPriorityCSS = function (item)
     {
         switch (item.priority)

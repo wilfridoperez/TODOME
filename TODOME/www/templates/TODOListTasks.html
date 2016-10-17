@@ -5,12 +5,12 @@
                 style="padding-left: 0px;padding-right: 0px;"
                 ng-click="data.showDelete = false; data.showReorder = false">
         </button>
-
-        <button class="button button-icon icon ion-android-search" 
+<button class="button button-icon icon ion-compose" 
                 style="padding-left: 0px;padding-right: 0px;"
-                ng-click="showFilterBar()"
-                ng-show="!showCancelButton()">
+                ng-click="editList();"
+                ng-show="!showCancelButton()" >
         </button>
+        
     </ion-nav-buttons>
     <ion-header-bar   class="bar-positive">
 
@@ -31,14 +31,14 @@
         </div>
     </div> 
     <ion-content class="has-subheader">
-        <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+        <ion-list show-delete="data.showDelete"> <!--  show-reorder="data.showReorder" -->
             <div class="item item-divider TODOListItem-Separator-Active">
                 Open
             </div>
             <ion-item ng-show="!activeTasks() || activeTasks() == 0">
                 <span>No opened tasks</span>
             </ion-item>
-            <ion-item ng-repeat="item in items"  class="item-avatar item-icon-left TODOListTask-Item" ng-if="!item.checked">
+            <ion-item ng-repeat="item in items | orderBy:'-createdOn'"  class="item-avatar item-icon-left TODOListTask-Item" ng-if="!item.checked">
                 <div class="row" ng-style="item.checked && {'text-decoration': 'line-through'}" >
                     <div class="col">
                         <ion-reorder-button class="ion-navicon" 
@@ -58,7 +58,7 @@
                     <div class="col col-75 TODOListTask-Title" ng-click="OpenEditor(item)" style="white-space: initial">
                         {{item.title}}
                     </div>
-                    <div class="col col-25" >{{item.qty}} {{item.unit}}</div>
+                    <div class="col col-25" >{{item.qty}} {{item.unit.Title}}</div>
                 </div>
             </ion-item>
             <div class="item item-divider TODOListItem-Separator-Completed">
@@ -84,7 +84,7 @@
                     <div class="col col-75 TODOListTask-Title" ng-click="OpenEditor(item)" style="white-space: initial">
                         {{item.title}}
                     </div>
-                    <div class="col col-25" >{{item.qty}} {{item.unit}}</div>
+                    <div class="col col-25" >{{item.qty}} {{item.unit.Title}}</div>
                 </div>
             </ion-item>
             <ion-item ng-show="!completedTasks() || completedTasks() == 0">
@@ -98,10 +98,10 @@
         </div>
     </ion-content>
     <ion-footer-bar  class="bar-positive">
-        <button class="button button-icon icon ion-compose" 
+        <button class="button button-icon icon ion-android-search" 
                 style="padding-left: 0px;padding-right: 0px;"
-                ng-click="editList();"
-                ng-show="!showCancelButton()" >
+                ng-click="showFilterBar()"
+                ng-show="!showCancelButton()">
         </button>
         <div class="title">
             <div>{{completedTasks()}} /

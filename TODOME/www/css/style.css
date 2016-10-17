@@ -27,6 +27,9 @@
     font-size: large;
     position: relative;
     top: -px;
+    /*top: -px;*/
+    white-space:initial;
+        margin-right: 15px;
 }
 
 .TODOList-icon
@@ -59,6 +62,15 @@
     margin: auto auto;
     width: 100%;
     font-size: large;
+}
+
+.TODOListTask-Item.ng-enter {
+    opacity: 0;
+    color: darkgray;
+    transition: all .5s ease;
+}
+.TODOListTask-Item.ng-enter-active {
+    opacity: 1;
 }
 
 .TODOSearchInput

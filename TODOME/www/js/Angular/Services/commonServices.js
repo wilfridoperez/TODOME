@@ -1,8 +1,8 @@
 app.factory('commonServices',  function( 
-                                                $rootScope, 
-                                               // $cordovaNetwork, 
-                                                $ionicLoading)
-                  {
+            $rootScope, 
+             // $cordovaNetwork, 
+             $ionicLoading)
+            {
     var reservedWords =   ["Current Location", "Home", "Work"];
 
     function getSavedSearchLocations()
@@ -138,7 +138,22 @@ app.factory('commonServices',  function(
         {
             return generateGUID();
         },
-
+        validFirebaseDatetime: function (dateTimeValue)
+        {
+            var returnValue = '';
+            if (dateTimeValue)
+            {
+                try
+                {
+                  returnValue = dateTimeValue.toString();
+                }
+                catch (error)
+                {
+                    console.log('validFirebaseDatetime: ' + error);
+                }
+            }
+            return returnValue;
+        },
         getLatLng: function (position)
         {
             var latLong = "";
@@ -166,13 +181,13 @@ app.factory('commonServices',  function(
         {
             $ionicLoading.show({ template: caption, noBackdrop: true, duration: 2000 });
         },
-        
+
         objectToValidJsonBool: function (value, defaultValue)
         {
-         var returnValue = value;
+            var returnValue = value;
             if (returnValue == undefined || returnValue == '' || returnValue == null)
             {
-                    returnValue = defaultValue;
+                returnValue = defaultValue;
             }
             return returnValue;
         },
@@ -189,7 +204,7 @@ app.factory('commonServices',  function(
             return returnValue;
         },
 
-       /* isOnline: function(){
+        /* isOnline: function(){
 
             if(ionic.Platform.isWebView()){
                 return $cordovaNetwork.isOnline();    
@@ -198,7 +213,7 @@ app.factory('commonServices',  function(
             }
 
         },
-        
+
         ifOffline: function(){
 
             if(ionic.Platform.isWebView()){

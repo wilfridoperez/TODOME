@@ -80,7 +80,7 @@ app.controller('SignInCtrl', function( $rootScope,
 
             DataLayerUser.save(user);
 
-            commonServices.toast('Looged successfully with ' + authData.provider);
+            commonServices.toast('Logged successfully with ' + authData.provider);
             $location.url('/map');
         }
         $rootScope.authData = authData; // This will display the user's name in our view

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('todome', ['ionic','ngCordova', 
-    'firebase', 'jett.ionic.filter.bar'])
+    'firebase', 'jett.ionic.filter.bar','angular.filter'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -32,24 +32,6 @@ var app = angular.module('todome', ['ionic','ngCordova',
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
     .state('app.TODOLists', {
       url: '/todolists',
       views: {

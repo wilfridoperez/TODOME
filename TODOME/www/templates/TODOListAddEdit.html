@@ -20,6 +20,10 @@
                     <span class="input-label">Retailer:</span>
                     <input type="text" ng-model="List.retailer">
                 </label>
+                <label class="item item-input">
+                    <span class="input-label">Status:</span>
+                    <input type="text" ng-model="List.status">
+                </label>
                 <div class="item item-divider">
                     Due Date
                 </div>
@@ -29,9 +33,9 @@
                 </label>
                  <label class="item item-input">
                     <span class="input-label">time:</span>
-                    <input type="time" name="List.dueTime">
+                    <input type="time" ng-model="List.dueDate">
                 </label>
-                <div class="item item-divider">
+                <div class="item item-divider"> 
                     Reminder
                 </div>
                 <label class="item item-input">
@@ -40,7 +44,7 @@
                 </label>
                  <label class="item item-input">
                     <span class="input-label">time:</span>
-                    <input type="time" name="List.reminderTime">
+                    <input type="time" ng-model="List.reminderDate">
                 </label>
                 <label class="item">
                     <button class="button button-block button-positive" type="submit">Save</button>
